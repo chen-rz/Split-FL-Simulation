@@ -1,0 +1,4 @@
+__pycache__/
+dataset/
+FL_training/__pycache__/
+FL_training/VGG5.pth
