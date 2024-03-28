@@ -13,7 +13,7 @@ import config
 import utils
 
 parser=argparse.ArgumentParser()
-parser.add_argument('--offload', help='FedAdapt or classic FL mode', type= utils.str2bool, default= False)
+parser.add_argument('--offload', help='Split FL or classic FL mode', type= utils.str2bool, default= False)
 args=parser.parse_args()
 
 LR = config.LR
@@ -26,12 +26,12 @@ sever.initialize(config.split_layer, offload, first, LR)
 first = False
 
 if offload:
-	logger.info('FedAdapt Training')
+	logger.info('Split FL Training')
 else:
 	logger.info('Classic FL Training')
 
 res = {}
-res['trianing_time'], res['test_acc_record'], res['bandwidth_record'] = [], [], []
+res['training_time'], res['test_acc_record'], res['bandwidth_record'] = [], [], []
 
 for r in range(config.R):
 	logger.info('====================================>')
@@ -44,18 +44,18 @@ for r in range(config.R):
 	e_time = time.time()
 
 	# Recording each round training time, bandwidth and test accuracy
-	trianing_time = e_time - s_time
-	res['trianing_time'].append(trianing_time)
+	training_time = e_time - s_time
+	res['training_time'].append(training_time)
 	res['bandwidth_record'].append(bandwidth)
 
 	test_acc = sever.test(r)
 	res['test_acc_record'].append(test_acc)
 
-	with open(config.home + '/results/FedAdapt_res.pkl','wb') as f:
+	with open(config.home + '/results/result.pkl','wb') as f:
 				pickle.dump(res,f)
 
 	logger.info('Round Finish')
-	logger.info('==> Round Training Time: {:}'.format(trianing_time))
+	logger.info('==> Round Training Time: {:}'.format(training_time))
 
 	logger.info('==> Reinitialization for Round : {:}'.format(r + 1))
 	if offload:
@@ -69,4 +69,3 @@ for r in range(config.R):
 
 	sever.reinitialize(split_layers, offload, first, LR)
 	logger.info('==> Reinitialization Finish')
-

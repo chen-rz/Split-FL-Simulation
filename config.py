@@ -1,5 +1,3 @@
-import sys
-
 # Network configration
 SERVER_ADDR= '127.0.0.1'
 SERVER_PORT = 24601
@@ -15,7 +13,7 @@ for _ in range(1, K + 1):
 
 # Dataset configration
 dataset_name = 'CIFAR10'
-home = sys.path[0].split('FedAdapt')[0] + 'FedAdapt'
+home = '..'
 dataset_path = home +'/dataset/'+ dataset_name +'/'
 N = 50000 # data length
 

@@ -1,4 +1,3 @@
-import socket
 import time
 import multiprocessing
 import argparse
@@ -14,7 +13,7 @@ import config
 import utils
 
 parser=argparse.ArgumentParser()
-parser.add_argument('--offload', help='FedAdapt or classic FL mode', type= utils.str2bool, default= False)
+parser.add_argument('--offload', help='Split FL or classic FL mode', type= utils.str2bool, default= False)
 # TODO For simulation, hostname instead of IP address
 parser.add_argument('--hostname', help='Hostname for the virtual client', type=str)
 args=parser.parse_args()
@@ -43,7 +42,7 @@ cpu_count = multiprocessing.cpu_count()
 trainloader, classes= utils.get_local_dataloader(index, 0) # TODO num_workers, compatible with cpu!
 
 if offload:
-	logger.info('FedAdapt Training')
+	logger.info('Split FL Training')
 else:
 	logger.info('Classic FL Training')
 

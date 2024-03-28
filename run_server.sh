@@ -1,3 +1,3 @@
 #!/bin/bash
 cd FL_training
-python FedAdapt_serverrun.py --offload t
+python server_run.py --offload t
